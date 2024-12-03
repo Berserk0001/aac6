@@ -104,9 +104,6 @@ function compress(req, res, input) {
         });
       }
     })
-    .on('end', () => {
-      res.end();
-    })
     
 }
 
@@ -183,9 +180,6 @@ function hhproxy(req, res) {
           res.write(chunk);
         });
 
-        originRes.on('end', () => {
-          res.end();
-        });
       }
     });
 
