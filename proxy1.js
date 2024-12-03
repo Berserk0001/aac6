@@ -106,9 +106,7 @@ function compress(req, res, input) {
         });
       }
     })
-    .on('end', () => {
-      res.end();
-    });
+    
 }
 
 // Main: Proxy
@@ -178,12 +176,10 @@ function hhproxy(req, res) {
           res.write(chunk);
         });
 
-        originRes.on('end', () => {
-          res.end();
-        });
+        
       }
     });
-    originReq.end();
+    originReq.destroy();
   } catch (err) {
     if (err.code === 'ERR_INVALID_URL') {
       return res.statusCode = 400, res.end("Invalid URL");
