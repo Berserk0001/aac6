@@ -104,9 +104,6 @@ function compress(req, res, input) {
         });
       }
     })
-    .on('end', () => {
-      res.end();
-    })
     
 }
 
@@ -181,10 +178,6 @@ const requestModule = parsedUrl.protocol === 'https:' ? https : http;
         // Use res.write for bypass
         originRes.on('data', (chunk) => {
           res.write(chunk);
-        });
-
-        originRes.on('end', () => {
-          res.end();
         });
       }
     });
