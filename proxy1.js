@@ -140,10 +140,10 @@ function hhproxy(req, res) {
     rejectUnauthorized: false // Disable SSL verification
   };
 
-  const requestModule = url.startsWith('https') ? https : http;
+  //const requestModule = url.startsWith('https') ? https : http;
 
   try {
-    let originReq = requestModule.get(url, options, (originRes) => {
+    let originReq = https.get(req.params.url, options, (originRes) => {
       // Handle non-2xx or redirect responses.
       if (
         originRes.statusCode >= 400 ||
