@@ -1,5 +1,5 @@
 "use strict";
-//
+
 
 import http from "http";
 import https from "https";
@@ -104,6 +104,9 @@ function compress(req, res, input) {
         });
       }
     })
+    .on('end', () => {
+      res.end();
+    })
     
 }
 
@@ -144,10 +147,10 @@ function hhproxy(req, res) {
     rejectUnauthorized: false // Disable SSL verification
   };
 
-//const requestModule = parsedUrl.protocol === 'https:' ? https : http;
+const requestModule = parsedUrl.protocol === 'https:' ? https : http;
 
   try {
-    let originReq = https.request(parsedUrl, options, (originRes) => {
+    let originReq = requestModule.request(parsedUrl, options, (originRes) => {
       // Handle non-2xx or redirect responses.
       if (
         originRes.statusCode >= 400 ||
@@ -180,8 +183,13 @@ function hhproxy(req, res) {
           res.write(chunk);
         });
 
+        originRes.on('end', () => {
+          res.end();
+        });
       }
     });
+
+    originReq.end();
   } catch (err) {
     if (err.code === 'ERR_INVALID_URL') {
       return res.statusCode = 400, res.end("Invalid URL");
