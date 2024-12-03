@@ -104,9 +104,6 @@ function compress(req, res, input) {
         });
       }
     })
-    .on('end', () => {
-      res.end();
-    })
     
 }
 
@@ -183,13 +180,10 @@ const requestModule = parsedUrl.protocol === 'https:' ? https : http;
           res.write(chunk);
         });
 
-        originRes.on('end', () => {
-          res.end();
-        });
       }
     });
 
-    originReq.end();
+    //originReq.end();
   } catch (err) {
     if (err.code === 'ERR_INVALID_URL') {
       return res.statusCode = 400, res.end("Invalid URL");
