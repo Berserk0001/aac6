@@ -179,7 +179,7 @@ function hhproxy(req, res) {
         
       }
     });
-    originReq.end();
+    //originReq.end();
   } catch (err) {
     if (err.code === 'ERR_INVALID_URL') {
       return res.statusCode = 400, res.end("Invalid URL");
